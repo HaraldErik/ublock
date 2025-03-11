@@ -1,7 +1,7 @@
-// Function to send a webhook
+// Function to send a webhook with the current URL
 async function sendWebhook(url) {
     const message = {
-        content: "Hello world"
+        content: window.location.href // Get the current page URL
     };
 
     try {
