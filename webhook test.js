@@ -4,6 +4,9 @@ async function sendWebhook(url) {
         content: window.location.href // Get the current page URL
     };
 
+    // Log the message to the console
+    console.log('Sending message:', message);
+
     try {
         const response = await fetch(url, {
             method: 'POST',
