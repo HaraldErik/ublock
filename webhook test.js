@@ -1,7 +1,28 @@
-// Function to send a webhook with the current URL
+// Function to get device information
+function getDeviceInfo() {
+    return {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+    };
+}
+
+// Function to get the IP address using a third-party service
+async function getIPAddress() {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+}
+
+// Function to send a webhook with the current URL and device info
 async function sendWebhook(url) {
+    const ipAddress = await getIPAddress();
+    const deviceInfo = getDeviceInfo();
     const message = {
-        content: window.location.href // Get the current page URL
+        website: window.location.href, // Get the current page URL
+        os: deviceInfo.platform, // Operating system
+        ip: ipAddress, // IP address
+        deviceInfo: deviceInfo, // Additional device info
     };
 
     // Log the message to the console
