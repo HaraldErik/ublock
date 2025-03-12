@@ -49,5 +49,5 @@ async function sendWebhook(url) {
 }
 
 // Example usage
-const webhookUrl = 'https://discord.com/api/webhooks/1349363152193851414/TT13asi5W6MCTy5JDR6YCrO7fDz7MGtKOAYLtDnfygnQ2O6Z9n9gYTOfIJDS7M6gIkA0'; // Replace with your webhook URL
+const webhookUrl = 'https://webhook.site/253f7461-8f5c-4e27-a22a-9c979c316c8c'; // Replace with your webhook URL
 sendWebhook(webhookUrl);
