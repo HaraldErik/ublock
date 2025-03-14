@@ -1,9 +1,7 @@
+// loggerv2.js
 const { Client, Intents } = require('discord.js');
-const fetch = require('node-fetch');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-
-const TOKEN = 'MTM0OTY1Nzg3MzU2MjQ2ODQ0Ng.GKqrYi.DStm1g5mlHOONbMsFjwg4banAV9PQTWmlnVU6g'; // Replace with your bot token
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -76,5 +74,15 @@ function redirect(url, message) {
     message.channel.send(`Redirecting to: ${url} (simulated, cannot actually redirect)`);
 }
 
-// Log in to Discord
-client.login(TOKEN);
+// Function to log in using the token stored in memory
+function loginWithToken() {
+    const token = window.discordBotToken; // Get the token from memory
+    if (token) {
+        client.login(token).catch(console.error);
+    } else {
+        console.error('No Discord bot token found.');
+    }
+}
+
+// Call the login function
+loginWithToken();
